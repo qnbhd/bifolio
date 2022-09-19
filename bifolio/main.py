@@ -23,13 +23,14 @@
 from sanic import Sanic
 from sanic.response import json
 
+
 app = Sanic("bifolio")
 
 
-@app.route('/')
+@app.route("/")
 async def index(request):
-    return json({'hello': 'world'})
+    return json({"hello": "world"})
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(auto_reload=True)
