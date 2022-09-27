@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="flowbite.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<nav class="px-6 fixed w-full top-0 right-0 bg-hero flex items-center justify-center py-6 z-40">
+    <div class="flex justify-between items-center max-w-8xl w-full">
+        <a href="#" class="flex items-center">
+            <img src="{{ url_for('static', filename='logo.svg') }}" class="mr-3 h-5 sm:h-9" alt="BiFolio Logo"/>
+            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BiFolio</span>
+        </a>
+        <div class="hidden lg:flex flex-grow">
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Product
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Resources
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Education
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Pricing</a>
+        </div>
+        <div>
+            <a href="{{ url_for('home.home') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Home</a>
+            <a href="{{ url_for('profile.profile') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Profile</a>
+            <a href="{{ url_for('account.logout') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Logout</a>
+        </div>
+    </div>
+</nav>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    Sign in to your account
+                </h1>
+                <form class="space-y-4 md:space-y-6" action="#" id="login_form" method="POST">
+                    <div>
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                            login</label>
+                        <input type="text" name="username" id="username"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                               placeholder="User name" required="">
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                               required="">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="remember" aria-describedby="remember" type="checkbox"
+                                       class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                                       required="">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+                            </div>
+                        </div>
+<!--                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot-->
+<!--                            password?</a>-->
+                    </div>
+                    <button type="submit"
+                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Sign in
+                    </button>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Don’t have an account yet? <a href="{{ url_for('account.signup') }}"
+                                                      class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign
+                        up</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript">
+    const serialize_form = form => JSON.stringify(
+        Array.from(new FormData(form).entries())
+            .reduce((m, [key, value]) => Object.assign(m, {[key]: value}), {})
+    );
+
+    $('#login_form').on('submit', function (event) {
+        event.preventDefault();
+        const json = serialize_form(this);
+        console.log(json);
+        $.ajax({
+            type: 'POST',
+            url: '/auth',
+            dataType: 'json',
+            data: json,
+            contentType: 'application/json',
+        }).done(function (data) {
+            if ('access_token' in data) {
+                alert('logged in');
+                window.location.replace("{{ url_for('home.home') }}");
+            }
+        });
+    });
+</script>
+</html>

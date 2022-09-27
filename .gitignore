@@ -252,3 +252,10 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm+all
+/bifolio/static/node_modules/
+/bifolio/static/tailwindcss/node_modules/
+/test.db
+/dump.rdb
+/tests/test.db
+
+**/*.DS_Store

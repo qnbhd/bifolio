@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BlockFolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/datepicker.js"></script>
+    <style>
+        /* The max width on the helpscout site is larger than tailwinds biggest max
+        width. If this was being built and compiled rather than using the CDN
+        the extra class should extend tailwind rather than be here*/
+        .max-w-8xl {
+            max-width: 80rem;
+        }
+
+        /* Since the hero art is a solid jpg (no transparency) ive had to add
+        the hero colour hero for use as a background otherwise it stands
+        out badly since Tailwind doesn't have the same colour. */
+        .bg-hero {
+            background: #f8faff;
+        }
+    </style>
+</head>
+<body class="">
+<nav class="px-6 fixed w-full top-0 right-0 bg-hero flex items-center justify-center py-6 z-40">
+    <div class="flex justify-between items-center max-w-8xl w-full">
+        <a href="#" class="flex items-center">
+            <img src="{{ url_for('static', filename='logo.svg') }}" class="mr-3 h-5 sm:h-9" alt="BiFolio Logo"/>
+            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BiFolio</span>
+        </a>
+        <div class="hidden lg:flex flex-grow">
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Product
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Resources
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Education
+                <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g id="icon-shape">
+                            <polygon id="Combined-Shape"
+                                     points="9.29289322 12.9497475 10 13.6568542 15.6568542 8 14.2426407 6.58578644 10 10.8284271 5.75735931 6.58578644 4.34314575 8"></polygon>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Pricing</a>
+        </div>
+        <div>
+            <a href="{{ url_for('home.home') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Home</a>
+            <a href="{{ url_for('profile.profile') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Profile</a>
+            <a href="{{ url_for('account.logout') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="h-screen mt-96 pt-20">
+        {% block content %}{% endblock %}
+</div>
+
+</body>
+{% block after_body %}{% endblock %}
+</html>
