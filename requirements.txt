@@ -15,3 +15,7 @@ aioredis>=2.0.1
 aiosqlite>=0.17.0
 rich>=12.5.1
 sanic-cors
+numpy
+pandas
+yfinance
+plotly
