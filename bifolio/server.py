@@ -20,7 +20,13 @@ from sqlalchemy.ext.asyncio import create_async_engine
 log = logging.getLogger("bifolio")
 
 
-modules = ()
+modules = (
+    "bifolio.blueprints.account",
+    "bifolio.blueprints.home",
+    "bifolio.blueprints.api",
+    "bifolio.blueprints.profile",
+    "bifolio.blueprints.transactions",
+)
 
 
 def create_app(module_names=None):
