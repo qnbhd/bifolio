@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="p-10 h-full">
+   <div class="flex items-end">
+
+   </div>
+</div>
+
+{% endblock %}
+
+{% block after_body %}
+<script type="text/javascript">
+    $('#make_tx_form').on('submit', function (event) {
+        event.preventDefault();
+        const json = serialize_form(this);
+        let url = '{{ url_for("transactions.make_transaction") }}'
+        make_transaction(json, url);
+    });
+
+</script>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bifolio.js') }}"></script>
+<!--suppress JSUnresolvedVariable, BadExpressionStatementJS, JSUnnecessarySemicolon -->
+<script type='text/javascript'>
+    let graphs = {{ graphJSON | safe }};
+    Plotly.newPlot('chart', graphs, {});
+</script>
+<script type="text/javascript" defer>
+    let d = new Date();
+    d.setSeconds(0, 0);
+    // Need to create UTC time of which fields are same as local time.
+    d.setUTCHours(d.getHours(), d.getMinutes(), d.getSeconds(), 0);
+    document.getElementById("tx_time").valueAsDate = d;
+
+    let dd = String(d.getDate()).padStart(2, '0');
+    let mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = d.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    document.getElementById("tx_date").value = today;
+</script>
+
+    <script type="text/javascript">
+      function dropdown() {
+        document.querySelector("#submenu").classList.toggle("hidden");
+        document.querySelector("#arrow").classList.toggle("rotate-0");
+      }
+      dropdown();
+
+      function openSidebar() {
+        document.querySelector(".sidebar").classList.toggle("hidden");
+      }
+    </script>
+{% endblock %}
