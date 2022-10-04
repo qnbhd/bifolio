@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BlockFolio</title>
+    <title>BIFOLIO</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<!--    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<!--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <script src="https://unpkg.com/flowbite@1.5.3/dist/datepicker.js"></script>
     <style>
         /* The max width on the helpscout site is larger than tailwinds biggest max
@@ -27,14 +28,14 @@
     </style>
 </head>
 <body class="">
-<nav class="px-6 fixed w-full top-0 right-0 bg-hero flex items-center justify-center py-6 z-40">
+<nav class="px-6 bg-white shadow-md fixed w-full top-0 right-0 flex items-center justify-center py-4 z-40">
     <div class="flex justify-between items-center max-w-8xl w-full">
         <a href="#" class="flex items-center">
             <img src="{{ url_for('static', filename='logo.svg') }}" class="mr-3 h-5 sm:h-9" alt="BiFolio Logo"/>
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BiFolio</span>
+            <span class="self-center text-sm font-semibold whitespace-nowrap dark:text-white">BIFOLIO</span>
         </a>
         <div class="hidden lg:flex flex-grow">
-            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Product
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 hover:text-gray-900">Product
                 <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -45,7 +46,7 @@
                     </g>
                 </svg>
             </a>
-            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Resources
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 hover:text-gray-900">Resources
                 <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -56,7 +57,7 @@
                     </g>
                 </svg>
             </a>
-            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Education
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 hover:text-gray-900">Education
                 <svg class="ml-1 h-4 w-4 fill-current" viewBox="0 0 20 20" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -67,17 +68,62 @@
                     </g>
                 </svg>
             </a>
-            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 font-light hover:text-gray-900">Pricing</a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 hover:text-gray-900">Pricing</a>
+            <a href="#" class="flex items-center ml-8 text-sm text-gray-700 hover:text-gray-900">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 5C3 4.29993 3 3.9499 3.13624 3.68251C3.25608 3.44731 3.44731 3.25608 3.68251 3.13624C3.9499 3 4.29993 3 5 3C5.70007 3 6.0501 3 6.31749 3.13624C6.55269 3.25608 6.74392 3.44731 6.86376 3.68251C7 3.9499 7 4.29993 7 5C7 5.70007 7 6.0501 6.86376 6.31749C6.74392 6.55269 6.55269 6.74392 6.31749 6.86376C6.0501 7 5.70007 7 5 7C4.29993 7 3.9499 7 3.68251 6.86376C3.44731 6.74392 3.25608 6.55269 3.13624 6.31749C3 6.0501 3 5.70007 3 5ZM3 12C3 11.2999 3 10.9499 3.13624 10.6825C3.25608 10.4473 3.44731 10.2561 3.68251 10.1362C3.9499 10 4.29993 10 5 10C5.70007 10 6.0501 10 6.31749 10.1362C6.55269 10.2561 6.74392 10.4473 6.86376 10.6825C7 10.9499 7 11.2999 7 12C7 12.7001 7 13.0501 6.86376 13.3175C6.74392 13.5527 6.55269 13.7439 6.31749 13.8638C6.0501 14 5.70007 14 5 14C4.29993 14 3.9499 14 3.68251 13.8638C3.44731 13.7439 3.25608 13.5527 3.13624 13.3175C3 13.0501 3 12.7001 3 12ZM3.13624 17.6825C3 17.9499 3 18.2999 3 19C3 19.7001 3 20.0501 3.13624 20.3175C3.25608 20.5527 3.44731 20.7439 3.68251 20.8638C3.9499 21 4.29993 21 5 21C5.70007 21 6.0501 21 6.31749 20.8638C6.55269 20.7439 6.74392 20.5527 6.86376 20.3175C7 20.0501 7 19.7001 7 19C7 18.2999 7 17.9499 6.86376 17.6825C6.74392 17.4473 6.55269 17.2561 6.31749 17.1362C6.0501 17 5.70007 17 5 17C4.29993 17 3.9499 17 3.68251 17.1362C3.44731 17.2561 3.25608 17.4473 3.13624 17.6825ZM10 5C10 4.29993 10 3.9499 10.1362 3.68251C10.2561 3.44731 10.4473 3.25608 10.6825 3.13624C10.9499 3 11.2999 3 12 3C12.7001 3 13.0501 3 13.3175 3.13624C13.5527 3.25608 13.7439 3.44731 13.8638 3.68251C14 3.9499 14 4.29993 14 5C14 5.70007 14 6.0501 13.8638 6.31749C13.7439 6.55269 13.5527 6.74392 13.3175 6.86376C13.0501 7 12.7001 7 12 7C11.2999 7 10.9499 7 10.6825 6.86376C10.4473 6.74392 10.2561 6.55269 10.1362 6.31749C10 6.0501 10 5.70007 10 5ZM10.1362 10.6825C10 10.9499 10 11.2999 10 12C10 12.7001 10 13.0501 10.1362 13.3175C10.2561 13.5527 10.4473 13.7439 10.6825 13.8638C10.9499 14 11.2999 14 12 14C12.7001 14 13.0501 14 13.3175 13.8638C13.5527 13.7439 13.7439 13.5527 13.8638 13.3175C14 13.0501 14 12.7001 14 12C14 11.2999 14 10.9499 13.8638 10.6825C13.7439 10.4473 13.5527 10.2561 13.3175 10.1362C13.0501 10 12.7001 10 12 10C11.2999 10 10.9499 10 10.6825 10.1362C10.4473 10.2561 10.2561 10.4473 10.1362 10.6825ZM10 19C10 18.2999 10 17.9499 10.1362 17.6825C10.2561 17.4473 10.4473 17.2561 10.6825 17.1362C10.9499 17 11.2999 17 12 17C12.7001 17 13.0501 17 13.3175 17.1362C13.5527 17.2561 13.7439 17.4473 13.8638 17.6825C14 17.9499 14 18.2999 14 19C14 19.7001 14 20.0501 13.8638 20.3175C13.7439 20.5527 13.5527 20.7439 13.3175 20.8638C13.0501 21 12.7001 21 12 21C11.2999 21 10.9499 21 10.6825 20.8638C10.4473 20.7439 10.2561 20.5527 10.1362 20.3175C10 20.0501 10 19.7001 10 19ZM17.1362 3.68251C17 3.9499 17 4.29993 17 5C17 5.70007 17 6.0501 17.1362 6.31749C17.2561 6.55269 17.4473 6.74392 17.6825 6.86376C17.9499 7 18.2999 7 19 7C19.7001 7 20.0501 7 20.3175 6.86376C20.5527 6.74392 20.7439 6.55269 20.8638 6.31749C21 6.0501 21 5.70007 21 5C21 4.29993 21 3.9499 20.8638 3.68251C20.7439 3.44731 20.5527 3.25608 20.3175 3.13624C20.0501 3 19.7001 3 19 3C18.2999 3 17.9499 3 17.6825 3.13624C17.4473 3.25608 17.2561 3.44731 17.1362 3.68251ZM17 12C17 11.2999 17 10.9499 17.1362 10.6825C17.2561 10.4473 17.4473 10.2561 17.6825 10.1362C17.9499 10 18.2999 10 19 10C19.7001 10 20.0501 10 20.3175 10.1362C20.5527 10.2561 20.7439 10.4473 20.8638 10.6825C21 10.9499 21 11.2999 21 12C21 12.7001 21 13.0501 20.8638 13.3175C20.7439 13.5527 20.5527 13.7439 20.3175 13.8638C20.0501 14 19.7001 14 19 14C18.2999 14 17.9499 14 17.6825 13.8638C17.4473 13.7439 17.2561 13.5527 17.1362 13.3175C17 13.0501 17 12.7001 17 12ZM17.1362 17.6825C17 17.9499 17 18.2999 17 19C17 19.7001 17 20.0501 17.1362 20.3175C17.2561 20.5527 17.4473 20.7439 17.6825 20.8638C17.9499 21 18.2999 21 19 21C19.7001 21 20.0501 21 20.3175 20.8638C20.5527 20.7439 20.7439 20.5527 20.8638 20.3175C21 20.0501 21 19.7001 21 19C21 18.2999 21 17.9499 20.8638 17.6825C20.7439 17.4473 20.5527 17.2561 20.3175 17.1362C20.0501 17 19.7001 17 19 17C18.2999 17 17.9499 17 17.6825 17.1362C17.4473 17.2561 17.2561 17.4473 17.1362 17.6825Z" fill="currentColor">
+                    </path>
+                </svg>
+            </a>
         </div>
-        <div>
-            <a href="{{ url_for('home.home') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Home</a>
-            <a href="{{ url_for('profile.profile') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Profile</a>
-            <a href="{{ url_for('account.logout') }}" class="text-sm p-2 text-black font-light hover:text-gray-900">Logout</a>
+        <div class="flex md:order-2 ml-4">
+            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1" >
+              <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+              <span class="sr-only">Search</span>
+            </button>
+            <div class="hidden relative md:block">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Search icon</span>
+              </div>
+              <input type="text" id="search-navbar" class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-full border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+            </div>
+            <button data-collapse-toggle="navbar-search" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-search" aria-expanded="false">
+      <span class="sr-only">Open menu</span>
+      <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+    </button>
+        </div>
+        <div class="w-auto h-auto lg:flex items-center">
+            <div class="mr-3">
+
+                <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start"
+                     class="w-8 h-8 rounded-full cursor-pointer" src="{{ url_for('static', filename='assets/images/avatar.png') }}" alt="User dropdown">
+
+                <div id="userDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                    <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
+                      <div>Templin Konstantin</div>
+                      <div class="font-medium truncate">1qnbhd@gmail.com</div>
+                    </div>
+                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                      <li>
+                        <a href="{{ url_for('home.home') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
+                      </li>
+                      <li>
+                        <a href="{{ url_for('profile.profile') }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                      </li>
+                    </ul>
+                    <div class="py-1">
+                      <a href="{{ url_for('account.logout') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    </div>
+                </div>
+
+            </div>
+            <span class="bl-2 bg-gray-200 h-10 w-px"></span>
         </div>
     </div>
 </nav>
 
-<div class="h-screen mt-96 pt-20">
+<div class="h-screen mt-20">
         {% block content %}{% endblock %}
 </div>
 

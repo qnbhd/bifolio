@@ -4,174 +4,232 @@
 
 {% block content %}
 
-<div class="p-10 h-full">
-   <div class="flex items-end">
-      <div class="flex-initial w-8/12 h-80 rounded overflow-hidden shadow-lg">
-         <div
-            class="block p-6 py-1 w-full h-80 rounded-lg border border-gray-200 shadow-md ark:bg-gray-800 dark:border-gray-70">
-            <div class="pt-3">
-               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  Your portfolio
-               </h5>
-               <div class="flex space-x-2">
-                  <span class="flex-initial inline mb-2 rounded-full p-3 border-2 {{ 'bg-green-400' if profit_rel > 0 else 'bg-red-400' }}
-                     bg-green-400 text-white text-sm">{{ profit_rel }} %</span>
-                  <span
-                     class="flex-initial inline mb-2 rounded-full p-3 border-2 bg-gray-100 text-black text-sm">
-                  {{ price }} $
-                  </span>
-                  <button
-                     class="flex-initial h-min p-3 h-auto-ns border-2 text-white align-middle bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                     type="button" data-modal-toggle="defaultModal">
-                  New transaction
-                  </button>
-                  <!-- Main modal -->
-                  <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                     <div class="relative p-4 w-5/12 align-middle max-w-2xl h-full md:h-auto">
+<div class="px-24 py-10 h-full">
+
+    <div class="flex h-full w-full">
+        <div class="flex flex-col h-full p-3 ml-8 w-80 dark:bg-gray-900 dark:text-gray-100">
+            <div class="space-y-3">
+                <button
+                    class="focus:outline-none w-full text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-full
+         text-xs px-4 py-3.5 dark:bg-purple-600 dark:hover:bg-primary-700 dark:focus:ring-primary-900"
+                    type="button" data-modal-toggle="defaultModal">
+                    NEW TRANSACTION
+                </button>
+                <!-- Main modal -->
+                <div id="defaultModal" tabindex="-1" aria-hidden="true"
+                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-5/12 align-middle max-w-2xl h-full md:h-auto">
                         <!-- Modal content -->
                         <div class="static p-6 w-full bg-white rounded-lg shadow dark:bg-gray-700">
-                           <div class="flex justify-between items-start pb-4 rounded-t dark:border-gray-600">
-                              <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                 Make transaction
-                              </h3>
-                              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
-                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                 </svg>
-                                 <span class="sr-only">Close modal</span>
-                              </button>
-                           </div>
-                           <form id="make_tx_form">
-                              <div class="grid gap-6 mt-4 md:grid-cols-2">
-                                 <div>
-                                    <label for="tx_time"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select
-                                    time</label>
-                                    <input type="time" id="tx_time" name="tx_time"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                       required>
-                                 </div>
-                                 <div>
-                                    <label for="tx_date"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select
-                                    date</label>
-                                    <div class="relative">
-                                       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                          <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                             fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd"
-                                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                clip-rule="evenodd"></path>
-                                          </svg>
-                                       </div>
-                                       <input datepicker type="text" id="tx_date" name="tx_date"
-                                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                          placeholder="Select date">
+                            <div class="flex justify-between items-start pb-4 rounded-t dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Make transaction
+                                </h3>
+                                <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="defaultModal">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                              clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <form id="make_tx_form">
+                                <div class="grid gap-6 mt-4 md:grid-cols-2">
+                                    <div>
+                                        <label for="tx_time"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select
+                                            time</label>
+                                        <input type="time" id="tx_time" name="tx_time"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                               required>
                                     </div>
-                                 </div>
-                                 <div>
-                                    <label for="amount"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Amount</label>
-                                    <input type="number" id="amount" name="amount" min="0.001" step="0.001" value="1.0"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                       placeholder="" required>
-                                 </div>
-                                 <div>
-                                    <label for="price"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Price</label>
-                                    <input type="number" step="0.001" id="price" name="price" min="0.001"
-                                       value="{{ btc_price }}"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                       placeholder="" required>
-                                 </div>
-                                 <div>
-                                    <label for="currencies"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
-                                    currency</label>
-                                    <select id="currencies" name="currency"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                       <option value="BTC" selected>BTC</option>
-                                       <option value="ETH">ETH</option>
-                                       <option value="MATIC">MATIC</option>
-                                       <option value="SOL">SOL</option>
-                                    </select>
-                                 </div>
-                                 <div>
-                                    <label for="action"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
-                                    actions</label>
-                                    <select id="action" name="action"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                       <option value="BUY" selected>Buy</option>
-                                       <option value="SELL">Sell</option>
-                                    </select>
-                                 </div>
-                                 <br>
-                                 <button type="submit"
-                                    class="w-full h-auto-ns text-white align-middle bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                 Make transaction
-                                 </button>
-                              </div>
-                           </form>
+                                    <div>
+                                        <label for="tx_date"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select
+                                            date</label>
+                                        <div class="relative">
+                                            <div
+                                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                <svg aria-hidden="true"
+                                                     class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                     fill="currentColor" viewBox="0 0 20 20"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
+                                            <input datepicker type="text" id="tx_date" name="tx_date"
+                                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                   placeholder="Select date">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="amount"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Amount</label>
+                                        <input type="number" id="amount" name="amount" min="0.001" step="0.001"
+                                               value="1.0"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                               placeholder="" required>
+                                    </div>
+                                    <div>
+                                        <label for="price"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Price</label>
+                                        <input type="number" step="0.001" id="price" name="price" min="0.001"
+                                               value="{{ btc_price }}"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                               placeholder="" required>
+                                    </div>
+                                    <div>
+                                        <label for="currencies"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                                            an
+                                            currency</label>
+                                        <select id="currencies" name="currency"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <option value="BTC" selected>BTC</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="MATIC">MATIC</option>
+                                            <option value="SOL">SOL</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="action"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                                            an
+                                            actions</label>
+                                        <select id="action" name="action"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <option value="BUY" selected>Buy</option>
+                                            <option value="SELL">Sell</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <button type="submit"
+                                            class="w-full h-auto-ns text-white align-middle bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        Make transaction
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                     </div>
-                  </div>
-               </div>
-               <div id="chart" class="h-44"></div>
+                    </div>
+                </div>
+                <button type="button" class="focus:outline-none w-full text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-full
+         text-xs px-4 py-3.5 mb-2 dark:bg-purple-600 dark:hover:bg-primary-700 dark:focus:ring-primary-900">CONNECT
+                    PORTFOLIO
+                </button>
+                <hr class="bg-gray-300 h-0.5 w-full">
+                <div class="relative">
+			<span class="absolute inset-y-0 left-0 flex items-center py-4">
+				<button type="submit" class="p-2 focus:outline-none focus:ring">
+					<svg fill="currentColor" viewBox="0 0 512 512" class="w-5 h-5 dark:text-gray-400">
+						<path
+                            d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
+					</svg>
+				</button>
+			</span>
+                    <input type="search" name="Search" placeholder="Search..."
+                           class="w-full py-2 pl-10 text-sm border-gray-300 dark:border-transparent rounded-lg focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900">
+                </div>
+                <div class="flex-1">
+                    <ul class="pt-2 pb-4 space-y-1 text-sm">
+                        <li class="rounded-sm" id="portfolio_0" onclick="shiftPortfolio(this.id)">
+                            <a rel="noopener noreferrer" href="#" class="flex items-center p-2 space-x-3 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                     class="w-5 h-5 fill-current dark:text-gray-400">
+                                    <path
+                                        d="M423.5,100H311V77.013c6.662-2.258,12.141-7.442,14.611-14.293c4.388-12.191-1.958-25.681-14.147-30.073 C288.5,24.374,260.85,20,231.5,20s-57,4.374-79.964,12.647C139.347,37.039,133,50.529,137.39,62.723c2.524,7.003,8.053,12.072,14.61,14.29V100H39.5C17.72,100,0,117.72,0,139.5v264C0,425.28,17.72,443,39.5,443h384c21.78,0,39.5-17.72,39.5-39.5v-264C463,117.72,445.28,100,423.5,100z M156.621,46.759C177.972,39.066,203.864,35,231.5,35s53.528,4.066,74.88,11.759c4.41,1.588,6.706,6.47,5.119,10.877c-1.213,3.365-4.427,5.625-7.999,5.625c-0.98,0-1.949-0.17-2.879-0.505C281.375,55.82,256.828,52,231.5,52s-49.875,3.82-69.12,10.756c-4.41,1.587-9.29-0.708-10.878-5.117C149.915,53.229,152.21,48.348,156.621,46.759z M167,77.022c0.155-0.052,0.31-0.099,0.465-0.154C185.121,70.504,207.862,67,231.5,67s46.379,3.504,64.036,9.869c0.153,0.055,0.31,0.093,0.464,0.145V100H167V77.022z M15,139.5c0-13.509,10.991-24.5,24.5-24.5h384c13.509,0,24.5,10.991,24.5,24.5v72c0,48.799-39.701,88.5-88.5,88.5H263v-8.5c0-12.958-10.542-23.5-23.5-23.5h-16c-12.958,0-23.5,10.542-23.5,23.5v8.5h-96.5C54.701,300,15,260.299,15,211.5V139.5z M248,307.5c0,4.687-3.813,8.5-8.5,8.5h-16c-4.687,0-8.5-3.813-8.5-8.5v-16c0-4.687,3.813-8.5,8.5-8.5h16c4.687,0,8.5,3.813,8.5,8.5V307.5z M215,329.403c2.638,1.027,5.503,1.597,8.5,1.597h16c2.997,0,5.862-0.57,8.5-1.597V339.5c0,4.687-3.813,8.5-8.5,8.5h-16c-4.687,0-8.5-3.813-8.5-8.5V329.403z M448,403.5c0,13.509-10.991,24.5-24.5,24.5h-384C25.991,428,15,417.009,15,403.5V265.119C33.171,295,66.044,315,103.5,315H200v24.5c0,12.958,10.542,23.5,23.5,23.5h16c12.958,0,23.5-10.542,23.5-23.5V315h96.5c37.456,0,70.329-20,88.5-49.881V403.5z"/>
+                                </svg>
+                                <span>Main portfolio</span>
+                            </a>
+                        </li>
+                        <li class="rounded-sm" id="portfolio_1" onclick="shiftPortfolio(this.id)">
+                            <a rel="noopener noreferrer" href="#" class="flex items-center p-2 space-x-3 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                     class="w-5 h-5 fill-current dark:text-gray-400">
+                                    <path
+                                        d="M423.5,100H311V77.013c6.662-2.258,12.141-7.442,14.611-14.293c4.388-12.191-1.958-25.681-14.147-30.073 C288.5,24.374,260.85,20,231.5,20s-57,4.374-79.964,12.647C139.347,37.039,133,50.529,137.39,62.723c2.524,7.003,8.053,12.072,14.61,14.29V100H39.5C17.72,100,0,117.72,0,139.5v264C0,425.28,17.72,443,39.5,443h384c21.78,0,39.5-17.72,39.5-39.5v-264C463,117.72,445.28,100,423.5,100z M156.621,46.759C177.972,39.066,203.864,35,231.5,35s53.528,4.066,74.88,11.759c4.41,1.588,6.706,6.47,5.119,10.877c-1.213,3.365-4.427,5.625-7.999,5.625c-0.98,0-1.949-0.17-2.879-0.505C281.375,55.82,256.828,52,231.5,52s-49.875,3.82-69.12,10.756c-4.41,1.587-9.29-0.708-10.878-5.117C149.915,53.229,152.21,48.348,156.621,46.759z M167,77.022c0.155-0.052,0.31-0.099,0.465-0.154C185.121,70.504,207.862,67,231.5,67s46.379,3.504,64.036,9.869c0.153,0.055,0.31,0.093,0.464,0.145V100H167V77.022z M15,139.5c0-13.509,10.991-24.5,24.5-24.5h384c13.509,0,24.5,10.991,24.5,24.5v72c0,48.799-39.701,88.5-88.5,88.5H263v-8.5c0-12.958-10.542-23.5-23.5-23.5h-16c-12.958,0-23.5,10.542-23.5,23.5v8.5h-96.5C54.701,300,15,260.299,15,211.5V139.5z M248,307.5c0,4.687-3.813,8.5-8.5,8.5h-16c-4.687,0-8.5-3.813-8.5-8.5v-16c0-4.687,3.813-8.5,8.5-8.5h16c4.687,0,8.5,3.813,8.5,8.5V307.5z M215,329.403c2.638,1.027,5.503,1.597,8.5,1.597h16c2.997,0,5.862-0.57,8.5-1.597V339.5c0,4.687-3.813,8.5-8.5,8.5h-16c-4.687,0-8.5-3.813-8.5-8.5V329.403z M448,403.5c0,13.509-10.991,24.5-24.5,24.5h-384C25.991,428,15,417.009,15,403.5V265.119C33.171,295,66.044,315,103.5,315H200v24.5c0,12.958,10.542,23.5,23.5,23.5h16c12.958,0,23.5-10.542,23.5-23.5V315h96.5c37.456,0,70.329-20,88.5-49.881V403.5z"/>
+                                </svg>
+                                <span>Main portfolio 2</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-         </div>
-      </div>
-      <div class="flex-initial w-full h-80 ml-4 rounded overflow-hidden">
-         <div class="block w-full h-auto rounded-lg border border-gray-200 ark:bg-gray-800 dark:border-gray-70">
-            <div class="h-auto overflow-y-auto relative sm:rounded-lg">
-               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead
-                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                     <tr>
-                        <th scope="col" class="py-3 px-6">
-                           NAME
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                           AMOUNT
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                           TOTAL
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                           24 HOURS P/L
-                        </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {% for key, value in holdings.items() %}
-                     <tr class="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row"
-                           class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                           <div class="flex">
-                              <img src="{{ url_for('static', filename='assets/images/{}.png'.format(key) ) }}"
-                                 class="h-6 w-6 rounded-full mr-2" alt="">
-                              <p class="align-middle pt-0.5">
-                                 {{ key }}
-                              </p>
-                           </div>
-                        </th>
-                        <td class="py-4 px-6">
-                           {{ value }}
-                        </td>
-                        <td class="py-4 px-6">
-                           N/A
-                        </td>
-                        <td class="py-4 px-6">
-                           N/A
-                        </td>
-                     </tr>
-                     {% endfor %}
-                  </tbody>
-               </table>
+        </div>
+        <div class="flex h-full w-full flex-end">
+            <div class="flex-initial w-full h-min ml-6 mr-8 rounded overflow-hidden">
+                <div class="w-auto h-40 rounded-lg border border-gray-200">
+                    <div class="rounded-lg shadow-sm mb-4">
+                        <div class="rounded-lg w-full h-40 bg-white  relative overflow-hidden">
+                            <div class="text-center relative mt-3 z-10">
+                                <h4 class="text-sm uppercase text-gray-500 leading-tight">HOLDINGS</h4>
+                                <h3 class="text-3sm text-gray-700 font-semibold leading-tight my-3">{{ price }} $</h3>
+                                <p class="text-xs text-green-500 leading-tight">▲ {{ profit_rel }}%</p>
+                            </div>
+
+                            <div class="absolute bottom-0 inset-x-0">
+                                <canvas id="chart1" height="70"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="block mt-4 w-full h-auto rounded-lg border border-gray-200 ark:bg-gray-800 dark:border-gray-70">
+                    <div class="h-auto overflow-y-auto relative sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">
+                                    NAME
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    AMOUNT
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    TOTAL
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    24 HOURS P/L
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, value in holdings.items() %}
+                            <tr class="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <div class="flex">
+                                        <img src="{{ url_for('static', filename='assets/images/{}.png'.format(key) ) }}"
+                                             class="h-6 w-6 rounded-full mr-2" alt="">
+                                        <p class="align-middle pt-0.5">
+                                            {{ key }}
+                                        </p>
+                                    </div>
+                                </th>
+                                <td class="py-4 px-6">
+                                    {{ value }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    N/A
+                                </td>
+                                <td class="py-4 px-6">
+                                    N/A
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
@@ -208,16 +266,41 @@
     today = dd + '/' + mm + '/' + yyyy;
     document.getElementById("tx_date").value = today;
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script type="text/javascript">
+    let ctx = document.getElementById('chart1').getContext('2d');
+    console.log("{{ chart_dates | safe }}")
+    let chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: {{ chart_dates | safe }},
+            datasets: [
+                {
+                    backgroundColor: "rgba(101, 116, 205, 0.1)",
+                    borderColor: "rgba(101, 116, 205, 0.8)",
+                    borderWidth: 2,
+                    data: {{ chart_data | safe }},
+                },
+            ],
+        },
+        options: chartOptions
+    });
+</script>
+<script type="text/javascript" defer>
+    function shiftPortfolio(portfolio_id) {
+        const style_selected = "border-l-4  border-primary-400";
+        const style_unselected = "border-l-4 border-transparent";
+        const elements1 = document.querySelectorAll(`[id^="portfolio"]`);
 
-    <script type="text/javascript">
-      function dropdown() {
-        document.querySelector("#submenu").classList.toggle("hidden");
-        document.querySelector("#arrow").classList.toggle("rotate-0");
-      }
-      dropdown();
+        for (const element of elements1) {
+            element.className = style_unselected;
+        }
 
-      function openSidebar() {
-        document.querySelector(".sidebar").classList.toggle("hidden");
-      }
-    </script>
+        document.getElementById(portfolio_id).className = style_selected;
+    }
+
+    shiftPortfolio("portfolio_0");
+</script>
+
 {% endblock %}

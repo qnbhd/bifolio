@@ -1,15 +1,13 @@
 from sanic import Blueprint
-from sanic.response import redirect
+from sanic_jwt import protected
 
 
 bp = Blueprint("home", url_prefix="/home")
 
 
 @bp.route("/", methods=["GET", "POST"])
+@protected(redirect_on_fail=True)
 async def home(request):
     """Home endpoint."""
 
-    if request.ctx.session.get("loggedin"):
-        return request.app.ctx.j2.render("home.html", request)
-
-    return redirect("/account/login")
+    return request.app.ctx.j2.render("home.html", request)

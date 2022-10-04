@@ -1,93 +1,54 @@
-import json
-
-import plotly
-from plotly import express as px
-from plotly import graph_objs as go
 from sanic import Blueprint
-from sanic.response import redirect
-from sanic_jwt import protected
-from sqlalchemy import select
+from sanic_jwt import inject_user
 
 from bifolio.domain.finance import get_holdings
 from bifolio.domain.finance import get_portfolio_price
 from bifolio.domain.finance import get_portfolio_profit
 from bifolio.domain.finance import get_stock_data
+from bifolio.storage.storage import Storage
+from bifolio.tools.jwt import protected_sec
 
 
 bp = Blueprint("profile", url_prefix="/profile")
 
 
 @bp.route("/", methods=["GET", "POST"])
-@protected()
-async def profile(request):
+@inject_user()
+@protected_sec(redirect_on_fail=True)
+async def profile(request, user):
     """Profile endpoint."""
-    if not request.ctx.session.get("loggedin"):
-        return redirect("/account/login")
-
-    from bifolio.database.models import Transaction
-    from bifolio.database.models import User
 
     # We need all the account info for the user so we can display it on the profile page
-    sess = request.ctx.db_session
+    storage: Storage = request.ctx.storage
 
-    async with sess.begin():
-        stmt = select(User).where(
-            User.login == request.ctx.session["username"]
-        )
-        result = await sess.execute(stmt)
-        row = result.one()
-        account = row[0].__dict__
+    result = await storage.get_user_transactions(user["id"])
 
-        stmt = select(Transaction).where(
-            Transaction.user_id == account["id"]
-        )
-        result = await sess.execute(stmt)
-        txs = result.scalars().all()
+    txs = result.result
 
-    df = get_portfolio_price(txs)
     btc_last_price = get_stock_data("BTC-USD").iloc[-1]["Close"]
 
-    if not df.empty:
-        # candlestick = go.Candlestick(
-        #     open=df["Open"],
-        #     close=df["Close"],
-        #     low=df["Low"],
-        #     high=df["High"],
-        # )
-        # fig = go.Figure(data=[candlestick])
-        # fig.update_layout(
-        #     xaxis_rangeslider_visible=False, template="plotly_white"
-        # )
-        fig = px.line(
-            df, y="Close", color_discrete_sequence=["#d40606"]
-        )
-        fig.update_layout(template="plotly_white")
-        fig.update_xaxes(visible=False, showgrid=False)
-        fig.update_yaxes(visible=False, showgrid=False)
-    else:
-        fig = go.Figure()
-        fig.update_layout(
-            xaxis_rangeslider_visible=False, template="plotly_white"
-        )
+    if txs:
+        df = get_portfolio_price(txs)
 
-    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-    price = get_portfolio_price(txs)
-
-    if not price.empty:
-        price = price.iloc[-1]["Close"]
+        price = df.iloc[-1]["Close"]
         _, rel = get_portfolio_profit(txs)
+
+        chart_data = df["Close"].to_list()
+        chart_dates = df.index.astype(str).to_list()
     else:
         price, _, rel = 0, 0, 0
+        chart_data = []
+        chart_dates = []
 
     # Show the profile page with account info
     return request.app.ctx.j2.render(
         "profile.html",
         request,
-        account=account,
+        account=user,
         btc_price=round(btc_last_price, 2),
-        graphJSON=graphJSON,
         price=round(price, 2),
         profit_rel=round(rel, 2),
         holdings=get_holdings(txs),
+        chart_data=chart_data,
+        chart_dates=chart_dates,
     )
