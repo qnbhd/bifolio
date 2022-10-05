@@ -1,51 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
-<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="#" class="flex items-center">
-            <img src="{{ url_for('static', filename='logo.svg') }}" class="mr-3 h-5 sm:h-9" alt="BiFolio Logo"/>
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BiFolio</span>
-        </a>
-        <button data-collapse-toggle="navbar-default" type="button"
-                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                      clip-rule="evenodd"></path>
-            </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li>
-                    <a href="/home"
-                       class="block py-2 pr-4 pl-3 text-white bg-primary-300 rounded md:bg-transparent md:text-primary-300 md:p-0 dark:text-white"
-                       aria-current="page">Home</a>
-                </li>
-                <li>
-                    <a href="#"
-                       class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-400 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<section class="bg-gray-50 dark:bg-gray-900">
+{% extends 'no_auth_layout.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<section class="bg-white mt-12">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Signup
+                    Sign up
                 </h1>
                 <form class="space-y-4 md:space-y-6" action="#" id="signup_form">
                     <div>
@@ -79,7 +43,7 @@
                         Sign up
                     </button>
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Have an account yet? <a href="/login"
+                        Have an account yet? <a href="{{ url_for('account.login') }}"
                                                       class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign
                         in</a>
                     </p>
@@ -88,7 +52,11 @@
         </div>
     </div>
 </section>
-</body>
+
+{% endblock %}
+
+{% block after_body %}
+
 <script type="text/javascript">
     const serialize_form = form => JSON.stringify(
         Array.from(new FormData(form).entries())
@@ -99,16 +67,50 @@
         event.preventDefault();
         const json = serialize_form(this);
         console.log(json);
-        $.ajax({
+         $.ajax({
             type: 'POST',
-            url: 'register',
+            url: '{{ url_for("api.register") }}',
             dataType: 'json',
             data: json,
             contentType: 'application/json',
-            success: function (data) {
-                window.location.replace("login");
+        }).done(function (data) {
+             window.location.replace("{{ url_for('account.login') }}");
+        }).fail(function (jqXHR, exception) {
+            // Our error logic here
+            var msg = '';
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network';
+            } else if (jqXHR.status === 404) {
+                msg = 'Requested page not found';
+            } else if (jqXHR.status === 500) {
+                msg = 'Internal Server Error [500]';
+            } else if (jqXHR.status === 401) {
+                msg = 'Incorrect login or password 😔';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted';
+            } else {
+                msg = 'Uncaught Error.\n' + jqXHR.responseText;
             }
-        });
+            Toastify({
+              text: msg,
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "bottom", // `top` or `bottom`
+              position: "right", // `left`, `center` or `right`
+              stopOnFocus: true, // Prevents dismissing of toast on hover
+              style: {
+                background: "#7c3aed",
+                padding: "1rem",
+              },
+              onClick: function(){} // Callback after click
+            }).showToast();
+        })
     });
 </script>
-</html>
+
+{% endblock %}

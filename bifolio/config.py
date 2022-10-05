@@ -25,3 +25,4 @@ def update_config(app):
     app.config["SANIC_JWT_SECRET"] = os.getenv(
         "SANIC_JWT_SECRET", "secret"
     )
+    app.config["SANIC_JWT_LOGIN_REDIRECT_URL"] = "/account/login"

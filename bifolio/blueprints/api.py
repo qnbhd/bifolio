@@ -5,91 +5,80 @@ import plotly
 from plotly import express as px
 from sanic import Blueprint
 from sanic import json
-from sqlalchemy import select
+from sanic_ext import validate
+from sanic_jwt import inject_user
+from sanic_jwt import protected
 
-from bifolio.database.models import Transaction
-from bifolio.database.models import User
 from bifolio.domain.finance import get_portfolio_price
 from bifolio.domain.finance import get_portfolio_profit
+from bifolio.models import UserModel
+from bifolio.storage.storage import Storage
+from bifolio.tools.returns import Error
 
 
 bp = Blueprint("api", url_prefix="/api")
 
 
 @bp.route("/register", methods=["POST"])
-async def create_user(request):
+@validate(json=UserModel, body_argument="person")
+async def register(request, person: UserModel):
     """Create a new user endpoint."""
 
-    login = request.json.get("username")
-    password = bcrypt.hash(request.json.get("password"))
+    login = person.username
+    password = bcrypt.hash(person.password)
 
-    conn = request.ctx.db_session
+    storage = request.ctx.storage
 
-    async with request.ctx.db_session.begin():
-        user = User(login=login, password=password)
+    result = await storage.create_user(login, password)
 
-    conn.add_all([user])
-    await conn.commit()
+    if isinstance(result, Error):
+        return json(result.message, status=400)
 
-    return json(user.login)
+    return json(result.result.__dict__, status=201)
 
 
 @bp.route("portfolio_js_plot", methods=["GET", "POST"])
-async def portfolio_js_plot(request):
+@inject_user()
+@protected(redirect_on_fail=True)
+async def portfolio_js_plot(request, user):
     """Get JSON plot data for portfolio."""
 
-    if request.ctx.session.get("loggedin"):
-        conn = request.ctx.db_session
+    # if request.ctx.session.get("loggedin"):
+    storage: Storage = request.ctx.storage
 
-        user_id = request.ctx.session.get("id")
+    result = await storage.get_user_transactions(user.id)
 
-        async with conn.begin():
-            txs = await conn.execute(
-                select(Transaction).where(
-                    Transaction.user_id == user_id
-                )
-            )
-            txs = txs.scalars().all()
+    if isinstance(result, Error):
+        return json(result.message, status=400)
 
-        df = get_portfolio_price(txs)
+    txs = result.result
 
-        fig = px.line(df, x="Date", y="Close")
-        # candlestick = go.Candlestick(
-        #     open=df["Open"],
-        #     close=df["Close"],
-        #     low=df["Low"],
-        #     high=df["High"],
-        # )
-        # fig = go.Figure(data=[candlestick])
-        # fig.update_layout(
-        #     xaxis_rangeslider_visible=False, template="plotly_white"
-        # )
+    df = get_portfolio_price(txs)
 
-        graphJSON = json_serializer.dumps(
-            fig, cls=plotly.utils.PlotlyJSONEncoder
-        )
+    fig = px.line(df, x="Date", y="Close")
 
-        return json(graphJSON)
+    graphJSON = json_serializer.dumps(
+        fig, cls=plotly.utils.PlotlyJSONEncoder
+    )
+
+    return json(graphJSON)
 
 
 @bp.route("portfolio_profit", methods=["GET", "POST"])
-async def portfolio_profit(request):
+@inject_user()
+@protected(redirect_on_fail=True)
+async def portfolio_profit(request, user):
     """Get portfolio profit."""
 
-    if request.ctx.session.get("loggedin"):
-        conn = request.ctx.db_session
+    # if request.ctx.session.get("loggedin"):
+    storage: Storage = request.ctx.storage
 
-        user_id = request.ctx.session.get("id")
+    result = await storage.get_user_transactions(user.id)
 
-        async with conn.begin():
-            txs = await conn.execute(
-                select(Transaction).where(
-                    Transaction.user_id == user_id
-                )
-            )
-            txs = txs.scalars().all()
+    if isinstance(result, Error):
+        return json(result.message, status=400)
 
-        result, rel = get_portfolio_profit(txs)
-        return json(
-            {"profit": round(result, 2), "rel": round(rel, 2)}
-        )
+    txs = result.result
+
+    result, rel = get_portfolio_profit(txs)
+    return json({"profit": round(result, 2), "rel": round(rel, 2)})

@@ -6,8 +6,7 @@ from typing import Sequence
 import pandas as pd
 import yfinance as yf
 
-from bifolio.database.models import Transaction
-from bifolio.database.models import TransactKind
+from bifolio.models import TransactionModel
 
 
 # TODO (qnbhd): temporary solution
@@ -42,7 +41,7 @@ def get_stock_data(
 
 
 def get_portfolio_price(
-    transactions: Sequence[Transaction],
+    transactions: Sequence[TransactionModel],
 ) -> pd.DataFrame:
     """
     Get portfolio price.
@@ -60,14 +59,14 @@ def get_portfolio_price(
     s = sum(
         tx.amount
         * get_stock_data(f"{tx.coin}-USD")
-        * (1 if tx.kind == TransactKind.BUY else -1)
+        * (1 if tx.kind == "BUY" else -1)
         for tx in transactions
     )
 
     return s if isinstance(s, pd.DataFrame) else pd.DataFrame()
 
 
-def get_holdings(transactions: Sequence[Transaction]):
+def get_holdings(transactions: Sequence[TransactionModel]):
     """
     Get holdings.
 
@@ -83,13 +82,13 @@ def get_holdings(transactions: Sequence[Transaction]):
 
     for tx in transactions:
         holdings[tx.coin] += (
-            tx.amount if tx.kind == TransactKind.BUY else -tx.amount
+            tx.amount if tx.kind == "BUY" else -tx.amount
         )
 
     return holdings
 
 
-def get_portfolio_profit(transactions: Sequence[Transaction]):
+def get_portfolio_profit(transactions: Sequence[TransactionModel]):
     """
     Get portfolio profit.
 

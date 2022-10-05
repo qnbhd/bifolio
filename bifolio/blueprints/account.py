@@ -1,5 +1,8 @@
+from contextlib import suppress
+
 from sanic import Blueprint
 from sanic.response import redirect
+from sanic_jwt import inject_user
 
 
 bp = Blueprint("account", url_prefix="/account")
@@ -13,23 +16,27 @@ async def signup(request):
 
 
 @bp.route("/logout")
-def logout(request):
+@inject_user()
+async def logout(request, user):
     """Logout endpoint."""
 
     # Remove session data, this will log the user out
-    request.ctx.session.pop("loggedin", None)
-    request.ctx.session.pop("id", None)
-    request.ctx.session.pop("username", None)
-    # Redirect to login page
-    return redirect("/account/login")
+    token = request.cookies.pop("access_token")
+    request.cookies.pop("refresh_token")
+
+    await request.app.ctx.redis.set(
+        f"blacklist:{token}", "true", ex=60 * 60 * 24
+    )
+    with suppress(AttributeError):
+        await request.app.ctx.redis.delete(f"refresh_token:{user.id}")
+
+    return redirect("/profile")
 
 
 @bp.route("/login", methods=["GET", "POST"])
 async def login(request):
     """Login endpoint."""
 
-    if request.ctx.session.get("loggedin"):
-        return redirect("/home")
     return request.app.ctx.j2.render(
         "index.html", request, msg="Hello, world!"
     )

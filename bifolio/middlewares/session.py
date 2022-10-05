@@ -1,39 +1,47 @@
 from contextvars import ContextVar
+import logging
 
 import aioredis
-from sanic_session import AIORedisSessionInterface
-from sanic_session import Session
 import secure
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
+from bifolio.storage.rdb import SQLAlchemyStorage
+from bifolio.tools.returns import Error
 
-_base_model_session_ctx: ContextVar[str] = ContextVar("db_session")
+
+_base_model_session_ctx: ContextVar[str] = ContextVar("_db_session")
+
+log = logging.getLogger(__name__)
 
 
 def setup_session_middlewares(app, bind):
     """Setup session middlewares."""
 
-    from bifolio.database.models import Base
-
     secure_headers = secure.Secure()
 
-    session = Session()
-
+    # noinspection PyProtectedMember
     @app.middleware("request")
     async def inject_session(request):
         """Inject session."""
 
-        request.ctx.db_session = sessionmaker(
+        request.ctx._db_session = sessionmaker(
             bind, AsyncSession, expire_on_commit=False
         )()
-        request.ctx.db_session_ctx_token = (
-            _base_model_session_ctx.set(request.ctx.db_session)
+        request.ctx._db_session_ctx_token = (
+            _base_model_session_ctx.set(request.ctx._db_session)
+        )
+        result = await SQLAlchemyStorage.create(
+            bind, request.ctx._db_session
         )
 
-        async with bind.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+        if isinstance(result, Error):
+            log.error(result.message)
+            exit(0)
 
+        request.ctx.storage = result.result
+
+    # noinspection PyProtectedMember
     @app.middleware("response")
     async def close_session(request, response):
         """Close session."""
@@ -42,9 +50,9 @@ def setup_session_middlewares(app, bind):
 
         if hasattr(request.ctx, "session_ctx_token"):
             _base_model_session_ctx.reset(
-                request.ctx.db_session_ctx_token
+                request.ctx._db_session_ctx_token
             )
-            await request.ctx.db_session.close()
+            await request.ctx._db_session.close()
 
     @app.listener("before_server_start")
     async def server_init(app_, loop):
@@ -52,8 +60,4 @@ def setup_session_middlewares(app, bind):
 
         app_.ctx.redis = await aioredis.from_url(
             app_.config["redis"], decode_responses=True
-        )
-
-        session.init_app(
-            app, interface=AIORedisSessionInterface(app_.ctx.redis)
         )

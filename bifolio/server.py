@@ -29,12 +29,16 @@ modules = (
 )
 
 
-def create_app(module_names=None):
+def create_app(
+    module_names=None, db_url=None, workers=1, redis_url=None
+):
     """
     Create the bifolio application.
 
     Args:
         module_names: List of modules to import.
+        db_url: Database URL.
+        redis_url: Redis URL.
 
     Returns:
         Sanic application.
@@ -52,9 +56,9 @@ def create_app(module_names=None):
 
     app = Sanic("bifolio")
 
-    bind = create_async_engine(
-        "sqlite+aiosqlite:///test.db", echo=True
-    )
+    db_url = db_url or "sqlite+aiosqlite:///test.db"
+
+    bind = create_async_engine(db_url, echo=True)
 
     app.static(
         "/static",
