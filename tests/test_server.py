@@ -100,6 +100,21 @@ async def test_login(app):
     assert "refresh_token" in response.json
 
 
+async def test_get_profile(app):
+    """
+    Test get profile.
+    """
+
+    await make_register_request(app, "test_12345", "test_12345")
+
+    request, response = await make_login_request(
+        app, "test_12345", "test_12345"
+    )
+    access_token = response.json["access_token"]
+    request, response = await make_profile_request(app, access_token)
+    assert response.status == 200
+
+
 async def test_authorize(app):
     """
     Test register and login.

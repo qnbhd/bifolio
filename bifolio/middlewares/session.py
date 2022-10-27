@@ -59,5 +59,5 @@ def setup_session_middlewares(app, bind):
         """Server init."""
 
         app_.ctx.redis = await aioredis.from_url(
-            app_.config["redis"], decode_responses=True
+            app_.config["REDIS_URL"], decode_responses=True
         )

@@ -47,6 +47,7 @@ class RedisMock(metaclass=Singleton):
 @pytest.fixture
 def app():
     Singleton.pop(RedisMock)
+
     with unittest.mock.patch(
         "aioredis.from_url", new=RedisMock.from_url
     ):

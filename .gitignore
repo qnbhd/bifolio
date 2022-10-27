@@ -259,3 +259,5 @@ cython_debug/
 /tests/test.db
 
 **/*.DS_Store
+/.fleet/
+.vscode/

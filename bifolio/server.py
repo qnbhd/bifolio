@@ -1,13 +1,13 @@
 """Module contains the main web-application for bifolio."""
 from importlib import import_module
 import logging
+import os
 from pathlib import Path
 import sys
 import warnings
 
 from rich.traceback import install
 from sanic import Sanic
-from sanic.response import redirect
 
 
 with warnings.catch_warnings():
@@ -67,9 +67,7 @@ def create_app(
 
     @app.route("/", methods=["GET", "POST"])
     async def root(request):
-        if request.ctx.session.get("loggedin"):
-            return redirect("/home")
-        return redirect("/account/login")
+        return request.app.ctx.j2.render("index.html", request)
 
     module_names = module_names or modules
 
@@ -96,4 +94,9 @@ def create_app(
 
 if __name__ == "__main__":
     sanic_app = create_app()
-    sanic_app.run(auto_reload=True, workers=4)
+    sanic_app.run(
+        host=os.getenv("BIFOLIO_HOST", "localhost"),
+        port=int(os.getenv("BIFOLIO_PORT", 8000)),
+        auto_reload=True,
+        workers=4,
+    )

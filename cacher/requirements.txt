@@ -1,0 +1,8 @@
+sanic>=22.6.2
+sanic-openapi>=21.12.0
+sanic-ext>=22.6.3
+yfinance
+pandas
+pika
+redis
+rich

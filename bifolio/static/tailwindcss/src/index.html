@@ -1,118 +1,276 @@
 {% extends 'no_auth_layout.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Index{% endblock %}
 
 {% block content %}
 
-<section class="bg-white mt-12">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Sign in to your account
-                </h1>
-                <form class="space-y-4 md:space-y-6" action="#" id="login_form" method="POST">
+<div class="flex pt-32 mt-24 px-6 md:pt-0 lg:pt-12 items-center justify-center bg-white md:h-screen overflow-hidden">
+    <div class="flex flex-col md:flex-row items-center max-w-8xl">
+        <div class="w-full px-48">
+            <h2 class="text-4xl lg:text-5xl text-center text-primary-900 leading-tight font-medium">Manage Your Crypto
+                and DeFi Portfolio From One Place
+            </h2>
+            <h3 class="mt-6 md:mt-10 text-md lg:text-xl text-center  text-gray-700 font-light tracking-wider leading-relaxed">
+                Securely connect the portfolio you’re using to start.</h3>
+
+            <div class="mt-10 flex flex-row justify-center gap-2">
                     <div>
-                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-                            login</label>
-                        <input type="text" name="username" id="username"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               placeholder="User name" required="">
+                        <a href="#"
+                           class="flex items-center p-4 text-base font-bold text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                            <svg aria-hidden="true" class="h-4" viewBox="0 0 40 38" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M39.0728 0L21.9092 12.6999L25.1009 5.21543L39.0728 0Z" fill="#E17726"/>
+                                <path d="M0.966797 0.0151367L14.9013 5.21656L17.932 12.7992L0.966797 0.0151367Z"
+                                      fill="#E27625"/>
+                                <path
+                                    d="M32.1656 27.0093L39.7516 27.1537L37.1004 36.1603L27.8438 33.6116L32.1656 27.0093Z"
+                                    fill="#E27625"/>
+                                <path
+                                    d="M7.83409 27.0093L12.1399 33.6116L2.89876 36.1604L0.263672 27.1537L7.83409 27.0093Z"
+                                    fill="#E27625"/>
+                                <path
+                                    d="M17.5203 10.8677L17.8304 20.8807L8.55371 20.4587L11.1924 16.4778L11.2258 16.4394L17.5203 10.8677Z"
+                                    fill="#E27625"/>
+                                <path
+                                    d="M22.3831 10.7559L28.7737 16.4397L28.8067 16.4778L31.4455 20.4586L22.1709 20.8806L22.3831 10.7559Z"
+                                    fill="#E27625"/>
+                                <path d="M12.4115 27.0381L17.4768 30.9848L11.5928 33.8257L12.4115 27.0381Z"
+                                      fill="#E27625"/>
+                                <path d="M27.5893 27.0376L28.391 33.8258L22.5234 30.9847L27.5893 27.0376Z"
+                                      fill="#E27625"/>
+                                <path
+                                    d="M22.6523 30.6128L28.6066 33.4959L23.0679 36.1282L23.1255 34.3884L22.6523 30.6128Z"
+                                    fill="#D5BFB2"/>
+                                <path
+                                    d="M17.3458 30.6143L16.8913 34.3601L16.9286 36.1263L11.377 33.4961L17.3458 30.6143Z"
+                                    fill="#D5BFB2"/>
+                                <path d="M15.6263 22.1875L17.1822 25.4575L11.8848 23.9057L15.6263 22.1875Z"
+                                      fill="#233447"/>
+                                <path d="M24.3739 22.1875L28.133 23.9053L22.8184 25.4567L24.3739 22.1875Z"
+                                      fill="#233447"/>
+                                <path d="M12.8169 27.0049L11.9606 34.0423L7.37109 27.1587L12.8169 27.0049Z"
+                                      fill="#CC6228"/>
+                                <path d="M27.1836 27.0049L32.6296 27.1587L28.0228 34.0425L27.1836 27.0049Z"
+                                      fill="#CC6228"/>
+                                <path
+                                    d="M31.5799 20.0605L27.6165 24.0998L24.5608 22.7034L23.0978 25.779L22.1387 20.4901L31.5799 20.0605Z"
+                                    fill="#CC6228"/>
+                                <path
+                                    d="M8.41797 20.0605L17.8608 20.4902L16.9017 25.779L15.4384 22.7038L12.3988 24.0999L8.41797 20.0605Z"
+                                    fill="#CC6228"/>
+                                <path d="M8.15039 19.2314L12.6345 23.7816L12.7899 28.2736L8.15039 19.2314Z"
+                                      fill="#E27525"/>
+                                <path d="M31.8538 19.2236L27.2061 28.2819L27.381 23.7819L31.8538 19.2236Z"
+                                      fill="#E27525"/>
+                                <path
+                                    d="M17.6412 19.5088L17.8217 20.6447L18.2676 23.4745L17.9809 32.166L16.6254 25.1841L16.625 25.1119L17.6412 19.5088Z"
+                                    fill="#E27525"/>
+                                <path
+                                    d="M22.3562 19.4932L23.3751 25.1119L23.3747 25.1841L22.0158 32.1835L21.962 30.4328L21.75 23.4231L22.3562 19.4932Z"
+                                    fill="#E27525"/>
+                                <path
+                                    d="M27.7797 23.6011L27.628 27.5039L22.8977 31.1894L21.9414 30.5138L23.0133 24.9926L27.7797 23.6011Z"
+                                    fill="#F5841F"/>
+                                <path
+                                    d="M12.2373 23.6011L16.9873 24.9926L18.0591 30.5137L17.1029 31.1893L12.3723 27.5035L12.2373 23.6011Z"
+                                    fill="#F5841F"/>
+                                <path
+                                    d="M10.4717 32.6338L16.5236 35.5013L16.4979 34.2768L17.0043 33.8323H22.994L23.5187 34.2753L23.48 35.4989L29.4935 32.641L26.5673 35.0591L23.0289 37.4894H16.9558L13.4197 35.0492L10.4717 32.6338Z"
+                                    fill="#C0AC9D"/>
+                                <path
+                                    d="M22.2191 30.231L23.0748 30.8354L23.5763 34.8361L22.8506 34.2234H17.1513L16.4395 34.8485L16.9244 30.8357L17.7804 30.231H22.2191Z"
+                                    fill="#161616"/>
+                                <path
+                                    d="M37.9395 0.351562L39.9998 6.53242L38.7131 12.7819L39.6293 13.4887L38.3895 14.4346L39.3213 15.1542L38.0875 16.2779L38.8449 16.8264L36.8347 19.1742L28.5894 16.7735L28.5179 16.7352L22.5762 11.723L37.9395 0.351562Z"
+                                    fill="#763E1A"/>
+                                <path
+                                    d="M2.06031 0.351562L17.4237 11.723L11.4819 16.7352L11.4105 16.7735L3.16512 19.1742L1.15488 16.8264L1.91176 16.2783L0.678517 15.1542L1.60852 14.4354L0.350209 13.4868L1.30098 12.7795L0 6.53265L2.06031 0.351562Z"
+                                    fill="#763E1A"/>
+                                <path
+                                    d="M28.1861 16.2485L36.9226 18.7921L39.7609 27.5398L32.2728 27.5398L27.1133 27.6049L30.8655 20.2912L28.1861 16.2485Z"
+                                    fill="#F5841F"/>
+                                <path
+                                    d="M11.8139 16.2485L9.13399 20.2912L12.8867 27.6049L7.72971 27.5398H0.254883L3.07728 18.7922L11.8139 16.2485Z"
+                                    fill="#F5841F"/>
+                                <path
+                                    d="M25.5283 5.17383L23.0847 11.7736L22.5661 20.6894L22.3677 23.4839L22.352 30.6225H17.6471L17.6318 23.4973L17.4327 20.6869L16.9139 11.7736L14.4707 5.17383H25.5283Z"
+                                    fill="#F5841F"/>
+                            </svg>
+                            <span class="flex-1 ml-3 whitespace-nowrap">MetaMask</span>
+                            <span
+                                class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
+                        </a>
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               required="">
+                        <a href="#"
+                           class="flex items-center w-max p-4 text-base font-bold text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                            <img aria-hidden="true" class=" h-4 w-50" src="{{ url_for('static', filename='assets/images/binance-logo.svg') }}"
+                                 alt="Binance Wallet">
+                            <span class="flex-1 ml-3 whitespace-nowrap">Binance</span>
+                            <span
+                                class="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
+                        </a>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" type="checkbox"
-                                       class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                       required="">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
-                            </div>
-                        </div>
-<!--                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot-->
-<!--                            password?</a>-->
-                    </div>
-                    <button type="submit"
-                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        Sign in
+                </div>
+            <div class="w-50 mt-10 flex flex-col items-stretch content-center">
+
+                <div class="flex-initial text-center mb-4">
+                    Or
+                </div>
+
+
+                <div class="flex-initial items-center justify-center mx-auto">
+                    <button
+                        class="center w-full px-10 py-3 rounded font-semibold text-md bg-primary-500 hover:bg-primary-700 text-white border-2 border-primary-500">
+                        Connect other
                     </button>
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Don’t have an account yet? <a href="{{ url_for('account.signup') }}"
-                                                      class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign
-                        up</a>
-                    </p>
-                </form>
+                </div>
+
+                <!--                <button-->
+                <!--                    class="w-full sm:w-40 px-4 py-3 rounded font-semibold text-md bg-primary-500 text-white border-2 border-primary-500">-->
+                <!--                    Get started-->
+                <!--                </button>-->
+                <!--                <button-->
+                <!--                    class="w-full mt-4 sm:mt-0 sm:ml-4 sm:w-40 px-4 py-3 rounded font-semibold text-md bg-white text-primary-500 border-2 border-white">-->
+                <!--                    Watch a Demo-->
+                <!--                </button>-->
+            </div>
+            <h4 class="text-center font-bold text-lg mb-0 mb-md-3 mt-8">The Official Tax Partner of:</h4>
+            <div class="flex flex-row gap-5 mt-12 mb-3 justify-between h-full">
+                <img class="h-max" src="https://s3-us-west-1.amazonaws.com/coin-tracker-public/static/images/third_party/coinbase.svg">
+                <img class="h-max" src="https://s3-us-west-1.amazonaws.com/coin-tracker-public/static/images/third_party/opensea.svg">
+                <img class="h-max" src="https://s3-us-west-1.amazonaws.com/coin-tracker-public/static/images/third_party/turbotax-whole.svg">
+                <img class="h-max" src="https://s3-us-west-1.amazonaws.com/coin-tracker-public/static/images/third_party/hrblock-horizontal-grey.svg">
             </div>
         </div>
     </div>
-</section>
+</div>
 
+<div class="mt-12 p-6">
+    <div class="flex flex-col-reverse md:flex-row m-auto max-w-8xl items-center justify-center">
+        <div class="w-1/2 p-6 pr-10">
+            <img src="{{ url_for('static', filename='assets/images/holdings.png') }}"/>
+        </div>
+        <div class="mt-6 md:mt-0 w-full md:w-1/3">
+            <p class="mt-4 text-3xl text-primary-900">Automated portfolio tracking</p>
+            <p class="py-6 text-gray-600">View your market value, investment performance, and portfolio allocation in real time and for tax purposes. We unify your transaction history across every crypto service and make it searchable and filterable. We support for 300+ exchanges & 10,000+ cryptocurrencies.</p>
+            <a class="mt-4 text-primary-500" href="#">More about the BIFOLIO</a>
+        </div>
+    </div>
+    <div class="flex mt-12 flex-col-reverse md:flex-row m-auto max-w-8xl items-center justify-between">
+        <div class="ml-32 md:mt-0 w-full md:w-1/3">
+            <p class="mt-4 text-3xl text-primary-900">Track your crypto portfolio on the go</p>
+            <p class="py-6 text-gray-600">Our mobile app empowers users to keep an eye on their portfolio and crypto prices. Never lose track of your assets, no matter where you are.</p>
+            <a class="mt-4 text-primary-500" href="#">More about BIFOLIO Mobile Apps</a>
+        </div>
+        <div class="mt-4 pt-4 ">
+            <img class="h-2/3 w-2/3" src="{{ url_for('static', filename='assets/images/mobile-apps.svg') }}"/>
+        </div>
+    </div>
+</div>
+<div class="mt-12 md:mt-32 lg:mt-12 w-full lg:w-2/5 m-auto flex flex-col items-center bg-white p-10">
+    <h3 class="text-primary-900 font-semibold text-center text-3xl">Get started with BIFOLIO</h3>
+    <p class="mt-6 text-gray-600 text-lg text-center leading-normal font-light">Ready to start tracking your portfolio?
+        <br>You'll be set up in minutes.</p>
+    <div class="mt-6 flex flex-col md:flex-row w-full md:px-8">
+        <input class="flex flex-grow px-4 py-2 rounded text-gray-500 border border-gray-500"
+               placeholder="Email Address">
+        <button class="mt-2 md:mt-0 md:ml-2 bg-primary-500 hover:bg-primary-700 shadow-lg rounded text-white px-4 py-3">Get Started</button>
+    </div>
+    <p class="mt-6 text-gray-500">See Help BIFOLIO in action.<a class="ml-2 text-primary-500" href="#">Get a Demo</a></p>
+</div>
+<footer class="flex justify-center w-full bg-primary-900 px-6">
+    <div class="w-full mt-12 max-w-8xl">
+        <div class="flex flex-col md:flex-row text-center md:text-left">
+            <div
+                class="flex flex-col items-center md:items-start w-full md:w-2/6 border-b pb-8 md:pb-0 md:border-none border-gray-600">
+                <a href="#">
+                    <svg class="h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.5 166" role="img">
+                        <path fill="#1292ee" class="logo-mark--st0"
+                              d="M9.9 97.2l48.6-48.6c6.3-6.2 10.2-14.9 10.2-24.4 0-9.4-3.8-18-9.9-24.2L10.2 48.6C3.9 54.8 0 63.5 0 73c0 9.5 3.8 18 9.9 24.2zM127.6 68.8L79 117.4c-6.3 6.2-10.2 14.9-10.2 24.4 0 9.4 3.8 18 9.9 24.2l48.6-48.6c6.3-6.2 10.2-14.9 10.2-24.4 0-9.5-3.8-18-9.9-24.2zM127.3 48.7s0-.1 0 0c6.3-6.2 10.2-14.9 10.2-24.4 0-9.4-3.8-18-9.9-24.2L10.2 117.4C3.9 123.6 0 132.3 0 141.8c0 9.4 3.8 18 9.9 24.2L127.3 48.7z"></path>
+                    </svg>
+                </a>
+                <p class="mt-2 text-2xl font-light text-white">Tools for the world's most customer-centric
+                    businesses</p>
+            </div>
+            <div class="flex flex-col w-full md:w-1/6 md:ml-8">
+                <p class="mt-6 md:mt-0 text-md text-white">Features</p>
+                <a href="#" class="mt-4 text-sm font-light text-white hover:text-gray-300">Help Desk</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Knowledge Base</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Live Chat</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Integrations</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Reports</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">iOS & Android</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Messages <span
+                    class="ml-1 px-1 font-semibold text-white text-xs bg-blue-500 rounded">COMING SOON</span></a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">More Features</a>
+            </div>
+            <div class="flex flex-col w-full md:w-1/6 md:ml-8">
+                <p class="mt-6 md:mt-0 text-md text-white">Learn</p>
+                <a href="#" class="mt-4 text-sm font-light text-white hover:text-gray-300">Customer Support
+                    Skills</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Designing Knowledge
+                    Bases</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Chat & Messaging</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Customer Support
+                    Benchmarks</a>
+            </div>
+            <div class="flex flex-col w-full md:w-1/6 md:ml-8">
+                <p class="mt-6 md:mt-0 text-md text-white">About Us</p>
+                <a href="#" class="mt-4 text-sm font-light text-white hover:text-gray-300">Careers</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Help BIFOLIO for Good</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Brand Handbook</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Terms & Privacy</a>
+            </div>
+            <div class="flex flex-col w-full md:w-1/6 md:ml-8">
+                <p class="mt-6 md:mt-0 text-md text-white">Get Help</p>
+                <a href="#" class="mt-4 text-sm font-light text-white hover:text-gray-300">Developers </a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Help Docs </a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Free Training</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Contact Sales</a>
+                <a href="#" class="mt-2 text-sm font-light text-white hover:text-gray-300">Status<span
+                    class="ml-1 px-1 font-semibold text-gray-400 text-xs bg-gray-600 rounded">99.99%</span></a>
+            </div>
+        </div>
+        <div class="mt-6 flex flex-col md:flex-row items-center justify-between py-4 w-full border-t border-gray-600">
+            <div class="flex text-white">
+                <a class="text-white" href="#">
+                    <svg class="h-6 w-6 fill-current" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-285.9 385.7 26.5 22"
+                         xml:space="preserve" role="img"><path fill="#8d98a1" d="M-269.3,386c-2.4,0.9-3.9,3.1-3.7,5.6l0.1,0.9l-1-0.1c-3.5-0.4-6.5-2-9.1-4.5l-1.3-1.3l-0.3,0.9c-0.7,2.1-0.2,4.3,1.2,5.7 c0.8,0.8,0.6,0.9-0.7,0.4c-0.5-0.2-0.9-0.3-0.9-0.2c-0.1,0.1,0.3,1.9,0.7,2.6c0.5,1,1.5,1.9,2.6,2.5l0.9,0.4l-1.1,0 c-1.1,0-1.1,0-1,0.4c0.4,1.3,1.9,2.6,3.6,3.2l1.2,0.4l-1,0.6c-1.5,0.9-3.3,1.4-5.1,1.4c-0.9,0-1.6,0.1-1.6,0.2 c0,0.2,2.3,1.3,3.7,1.7c4.1,1.3,8.9,0.7,12.6-1.4c2.6-1.5,5.2-4.6,6.4-7.5c0.7-1.6,1.3-4.4,1.3-5.8c0-0.9,0.1-1,1.1-2.1 c0.6-0.6,1.2-1.3,1.3-1.5c0.2-0.4,0.2-0.4-0.8,0c-1.6,0.6-1.9,0.5-1.1-0.4c0.6-0.6,1.3-1.7,1.3-2.1c0-0.1-0.3,0-0.6,0.2 c-0.3,0.2-1.1,0.5-1.7,0.7l-1,0.3l-0.9-0.6c-0.5-0.3-1.2-0.7-1.6-0.9C-266.9,385.6-268.4,385.7-269.3,386z"></path></svg>
+                </a>
+                <a href="#">
+                    <svg class="ml-4 h-6 w-6 fill-current" viewBox="0 0 20 20" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g fill="#8d98a1">
+                                <path
+                                    d="M20,3.33355556 C20,1.582 18.4186667,0 16.6666667,0 L3.33333333,0 C1.58133333,0 0,1.582 0,3.33355556 L0,16.6664444 C0,18.418 1.58133333,20 3.33355556,20 L10,20 L10,12.4444444 L7.55555556,12.4444444 L7.55555556,9.11111111 L10,9.11111111 L10,7.81244444 C10,5.57266667 11.6817778,3.55555556 13.75,3.55555556 L16.4444444,3.55555556 L16.4444444,6.88888889 L13.75,6.88888889 C13.4551111,6.88888889 13.1111111,7.24688889 13.1111111,7.78311111 L13.1111111,9.11111111 L16.4444444,9.11111111 L16.4444444,12.4444444 L13.1111111,12.4444444 L13.1111111,20 L16.6666667,20 C18.4186667,20 20,18.418 20,16.6664444 L20,3.33355556 Z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+                <a href="#">
+                    <svg class="ml-4 h-6 w-6 fill-current" viewBox="0 0 20 20" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g fill="#8d98a1">
+                                <path
+                                    d="M10.7358299,9.05316505 C10.74693,9.03496505 10.7625302,9.01306505 10.7778304,8.99176505 L10.7778304,9.05316505 L10.7358299,9.05316505 Z M16.9563347,16.7413593 L13.9355007,16.7413593 L13.9355007,11.9100805 C13.9355007,10.696181 13.4977552,9.86785022 12.4052981,9.86785022 C11.5695643,9.86785022 11.0734621,10.4266736 10.8556124,10.9662 C10.7748894,11.1588913 10.7548946,11.4283987 10.7548946,11.6975342 L10.7548946,16.7411734 L7.73457208,16.7411734 C7.73457208,16.7411734 7.77409657,8.5583491 7.73457208,7.71146523 L10.7553596,7.71146523 L10.7553596,8.99162555 C11.1563705,8.37649203 11.8729729,7.4990119 13.477156,7.4990119 C15.4654707,7.4990119 16.9563347,8.78884399 16.9563347,11.5636639 L16.9563347,16.7413593 Z M4.55280357,6.47798976 L4.53248332,6.47798976 C3.51912172,6.47798976 2.86222458,5.78497064 2.86222458,4.91734826 C2.86222458,4.03224231 3.53841897,3.35800873 4.57186832,3.35800873 C5.60541067,3.35800873 6.24115058,4.03205632 6.26123833,4.91734826 C6.26123833,5.78515663 5.60564317,6.47798976 4.55280357,6.47798976 Z M3.0415728,16.7413593 L6.06342984,16.7413593 L6.06342984,7.71160472 L3.0415728,7.71160472 L3.0415728,16.7413593 Z M18.5232253,0 L1.4777512,0 C0.661547082,0 0,0.641358883 0,1.43295561 L0,18.5664399 C0,19.3580366 0.661779579,20 1.4777512,20 L18.5232253,20 C19.3391969,20 20,19.3576181 20,18.5664399 L20,1.43295561 C20,0.641591377 19.3391969,0 18.5232253,0 Z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="flex flex-col md:flex-row text-center text-white">
+                <p class="mt-4 md:mt-0 ml-2 text-sm text-white">Made by hand in over 60 cities around the world.</p>
+                <p class="mt-4 md:mt-0 ml-2 text-sm font-light">© 2022 BIFOLIO</p>
+            </div>
+        </div>
+    </div>
+</footer>
 {% endblock %}
 
 {% block after_body %}
-<script type="text/javascript">
-    const serialize_form = form => JSON.stringify(
-        Array.from(new FormData(form).entries())
-            .reduce((m, [key, value]) => Object.assign(m, {[key]: value}), {})
-    );
 
-    $('#login_form').on('submit', function (event) {
-        event.preventDefault();
-        const json = serialize_form(this);
-        console.log(json);
-        $.ajax({
-            type: 'POST',
-            url: '/auth',
-            dataType: 'json',
-            data: json,
-            contentType: 'application/json',
-        }).done(function (data) {
-            if ('access_token' in data) {
-                window.location.replace("{{ url_for('home.home') }}");
-            }
-        }).fail(function (jqXHR, exception) {
-            // Our error logic here
-            var msg = '';
-            if (jqXHR.status === 0) {
-                msg = 'Not connect.\n Verify Network';
-            } else if (jqXHR.status === 404) {
-                msg = 'Requested page not found';
-            } else if (jqXHR.status === 500) {
-                msg = 'Internal Server Error [500]';
-            } else if (jqXHR.status === 401) {
-                msg = 'Incorrect login or password 😔';
-            } else if (exception === 'parsererror') {
-                msg = 'Requested JSON parse failed';
-            } else if (exception === 'timeout') {
-                msg = 'Time out error.';
-            } else if (exception === 'abort') {
-                msg = 'Ajax request aborted';
-            } else {
-                msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
-            Toastify({
-              text: msg,
-              duration: 3000,
-              newWindow: true,
-              close: true,
-              gravity: "bottom", // `top` or `bottom`
-              position: "right", // `left`, `center` or `right`
-              stopOnFocus: true, // Prevents dismissing of toast on hover
-              style: {
-                background: "#7c3aed",
-                padding: "1rem",
-              },
-              onClick: function(){} // Callback after click
-            }).showToast();
-        })
-
-    });
-</script>
 {% endblock %}

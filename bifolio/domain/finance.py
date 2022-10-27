@@ -1,12 +1,19 @@
 from collections import defaultdict
 import functools
+import json
+import logging
+import os
 from typing import Dict
 from typing import Sequence
 
 import pandas as pd
+import pika
 import yfinance as yf
 
 from bifolio.models import TransactionModel
+
+
+log = logging.getLogger(__name__)
 
 
 # TODO (qnbhd): temporary solution
@@ -84,6 +91,10 @@ def get_holdings(transactions: Sequence[TransactionModel]):
         holdings[tx.coin] += (
             tx.amount if tx.kind == "BUY" else -tx.amount
         )
+
+    for h in holdings.copy():
+        if abs(holdings[h] < 1e-16):
+            del holdings[h]
 
     return holdings
 

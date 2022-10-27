@@ -21,8 +21,17 @@ def update_config(app):
     app.config["TEMPLATING_PATH_TO_TEMPLATES"] = (
         Path(__file__).parent / "static" / "tailwindcss" / "src"
     )
-    app.config["redis"] = "redis://localhost"
+    app.config["REDIS_URL"] = os.getenv(
+        "REDIS_URL", "redis://localhost"
+    )
     app.config["SANIC_JWT_SECRET"] = os.getenv(
         "SANIC_JWT_SECRET", "secret"
     )
     app.config["SANIC_JWT_LOGIN_REDIRECT_URL"] = "/account/login"
+    app.config["RABBITMQ_HOST"] = os.getenv(
+        "RABBITMQ_HOST", "localhost"
+    )
+    app.config["RABBITMQ_PORT"] = os.getenv("RABBITMQ_PORT", 5672)
+    app.config["RABBITMQ_QUEUE"] = os.getenv(
+        "RABBITMQ_QUEUE", "stocks"
+    )

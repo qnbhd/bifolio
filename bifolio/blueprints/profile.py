@@ -1,22 +1,58 @@
+import json
+import logging
+import os
+
+import pika
 from sanic import Blueprint
-from sanic_jwt import inject_user
+from sanic.response import redirect
 
 from bifolio.domain.finance import get_holdings
 from bifolio.domain.finance import get_portfolio_price
 from bifolio.domain.finance import get_portfolio_profit
 from bifolio.domain.finance import get_stock_data
 from bifolio.storage.storage import Storage
+from bifolio.tools.jwt import inject_user_sec
 from bifolio.tools.jwt import protected_sec
 
 
 bp = Blueprint("profile", url_prefix="/profile")
 
+log = logging.getLogger(__name__)
+
+
+def send_to_rabbit(stocks_data_dict, host, port, queue):
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host=host,
+            port=port,
+        )
+    )
+
+    body = json.dumps(stocks_data_dict).encode()
+
+    queue = os.getenv("RABBITMQ_QUEUE", queue)
+    channel = connection.channel()
+    channel.queue_declare(queue=queue, durable=True)
+    channel.basic_publish(
+        exchange="",
+        routing_key=queue,
+        body=body,
+        properties=pika.BasicProperties(
+            delivery_mode=2,
+        ),
+    )
+    log.info(f"Stock data is sent to RabbitMQ")
+    connection.close()
+
 
 @bp.route("/", methods=["GET", "POST"])
-@inject_user()
+@inject_user_sec()
 @protected_sec(redirect_on_fail=True)
 async def profile(request, user):
     """Profile endpoint."""
+
+    if not user:
+        return redirect(request.app.url_for("root"))
 
     # We need all the account info for the user so we can display it on the profile page
     storage: Storage = request.ctx.storage
@@ -25,7 +61,23 @@ async def profile(request, user):
 
     txs = result.result
 
-    btc_last_price = get_stock_data("BTC-USD").iloc[-1]["Close"]
+    if await request.app.ctx.redis.exists("BTC-USD"):
+        btc_last_price = await request.app.ctx.redis.get("BTC-USD")
+        btc_last_price = float(btc_last_price)
+        log.info("Take BTC price from Redis")
+    else:
+        btc_last_price = get_stock_data("BTC-USD").iloc[-1]["Close"]
+
+        log.info("Take BTC price from Yahoo Finance")
+
+        send_to_rabbit(
+            {"BTC-USD": float(btc_last_price)},
+            host=request.app.config.RABBITMQ_HOST,
+            port=request.app.config.RABBITMQ_PORT,
+            queue=request.app.config.RABBITMQ_QUEUE,
+        )
+
+        log.info("Send BTC price to RabbitMQ")
 
     if txs:
         df = get_portfolio_price(txs)

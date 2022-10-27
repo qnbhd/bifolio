@@ -55,7 +55,7 @@ def test_get_portfolio_price():
                 Tx(2, "ETH", TransactKind.BUY, 3000),
                 Tx(1, "BTC", TransactKind.SELL, 21000),
             ],
-            {"BTC": 0, "ETH": 2},
+            {"ETH": 2},
         ),
         (
             [
@@ -64,7 +64,7 @@ def test_get_portfolio_price():
                 Tx(1, "BTC", TransactKind.SELL, 21000),
                 Tx(1, "ETH", TransactKind.SELL, 3100),
             ],
-            {"BTC": 0, "ETH": 1},
+            {"ETH": 1},
         ),
     ],
 )

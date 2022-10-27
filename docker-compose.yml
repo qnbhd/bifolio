@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+    rabbit:
+        image: rabbitmq:3-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+        healthcheck:
+            test: ["CMD", "rabbitmq-diagnostics", "status"]
+            interval: 15s
+            timeout: 10s
+            retries: 3
+        restart: always
+
+    redis:
+        image: 'redis:alpine'
+        restart: always
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            interval: 15s
+            timeout: 10s
+            retries: 3
+        ports:
+            - "6379:6379"
+
+    cacher:
+        build:
+            dockerfile: cacher/Dockerfile
+        container_name: cacher
+        restart: always
+        depends_on:
+            rabbit:
+                condition: service_started
+        ports:
+            - "5003:5003"
+        environment:
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            RABBITMQ_HOST: rabbitmq
+            RABBIMQ_PORT: 5672
+            RABBITMQ_QUEUE: stocks
+
+    bifolio:
+        build:
+            dockerfile: bifolio/Dockerfile
+        container_name: bifolio
+        restart: always
+        depends_on:
+            rabbit:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+            cacher:
+                condition: service_started
+        ports:
+            - "8000:8000"
+        environment:
+            BIFOLIO_HOST: 0.0.0.0
+            BIFOLIO_PORT: 8000
+            REDIS_URL: redis://redis:6379
+            RABBITMQ_HOST: rabbitmq
+            RABBIMQ_PORT: 5672
+            RABBITMQ_QUEUE: stocks

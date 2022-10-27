@@ -4,21 +4,30 @@ from sanic import Blueprint
 from sanic.response import redirect
 from sanic_jwt import inject_user
 
+from bifolio.tools.jwt import inject_user_sec
+
 
 bp = Blueprint("account", url_prefix="/account")
 
 
 @bp.route("/signup", methods=["GET", "POST"])
-async def signup(request):
+@inject_user_sec()
+async def signup(request, user):
     """Sign up a new user endpoint."""
+
+    if user:
+        return redirect(request.app.url_for("home.home"))
 
     return request.app.ctx.j2.render("register.html", request)
 
 
 @bp.route("/logout")
-@inject_user()
+@inject_user_sec()
 async def logout(request, user):
     """Logout endpoint."""
+
+    if not user:
+        return redirect(request.app.url_for("root"))
 
     # Remove session data, this will log the user out
     token = request.cookies.pop("access_token")
@@ -34,9 +43,13 @@ async def logout(request, user):
 
 
 @bp.route("/login", methods=["GET", "POST"])
-async def login(request):
+@inject_user_sec()
+async def login(request, user):
     """Login endpoint."""
 
+    if user:
+        return redirect(request.app.url_for("home.home"))
+
     return request.app.ctx.j2.render(
-        "index.html", request, msg="Hello, world!"
+        "login.html", request, msg="Hello, world!"
     )

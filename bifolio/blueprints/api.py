@@ -13,6 +13,7 @@ from bifolio.domain.finance import get_portfolio_price
 from bifolio.domain.finance import get_portfolio_profit
 from bifolio.models import UserModel
 from bifolio.storage.storage import Storage
+from bifolio.tools.jwt import inject_user_sec
 from bifolio.tools.returns import Error
 
 
@@ -38,10 +39,13 @@ async def register(request, person: UserModel):
 
 
 @bp.route("portfolio_js_plot", methods=["GET", "POST"])
-@inject_user()
+@inject_user_sec()
 @protected(redirect_on_fail=True)
 async def portfolio_js_plot(request, user):
     """Get JSON plot data for portfolio."""
+
+    if not user:
+        return json({"msg": "Unauthorized"}, status=401)
 
     # if request.ctx.session.get("loggedin"):
     storage: Storage = request.ctx.storage
@@ -65,10 +69,13 @@ async def portfolio_js_plot(request, user):
 
 
 @bp.route("portfolio_profit", methods=["GET", "POST"])
-@inject_user()
+@inject_user_sec()
 @protected(redirect_on_fail=True)
 async def portfolio_profit(request, user):
     """Get portfolio profit."""
+
+    if not user:
+        return json({"msg": "Unauthorized"}, status=401)
 
     # if request.ctx.session.get("loggedin"):
     storage: Storage = request.ctx.storage
